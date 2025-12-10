@@ -1,10 +1,37 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { Cookie } from "bun";
 
-const app = new Hono()
+const app = new Hono();
 
-app.use(cors({
-    origin: process.env.CORS_ORIGIN || process.env.CROS_ORIGIN, // both supported
-    credentials: true, // cookies, sessions allow
-}))
+//Hono Syntax
+// specify path
+// app.use('/posts/*', cors())
+//CORS Middleware
+app.use(
+  `${process.env.CORS_ORIGIN}`,
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
+
+//Hono Syntax
+app.use("*", async (c, next) => {
+  const type = c.req.header("content-type");
+
+  if (type?.includes("application/json")) {
+    try {
+      c.req.parseBody = await c.req.json();
+    } catch {
+      c.req.parseBody = {};
+    }
+  }
+
+  if (type?.includes("application/x-www-form-urlencoded")) {
+    c.req.parseBody = await c.req.parseBody();
+  }
+
+  await next();
+});
+
+export { app };
