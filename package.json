@@ -11,6 +11,8 @@
     "build": "bun build ./src/index.js --outdir dist --target bun"
   },
   "dependencies": {
+    "@elysiajs/jwt": "^1.4.0",
+    "bcrypt": "^6.0.0",
     "hono": "^4.10.8",
     "mongoose": "^9.0.1"
   },
