@@ -34,4 +34,12 @@ app.use("*", async (c, next) => {
   await next();
 });
 
+// Declaration the user routes
+
+import registerUser from "../controllers/user.controller";
+
+app.use("/api/v1/users", userRouter)
+
+
+
 export { app };
