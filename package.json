@@ -11,7 +11,9 @@
   "license": "ISC",
   "packageManager": "pnpm@10.17.0",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "mongoos": "0.0.1-security",
     "prettier": "^3.7.4"
   }
 }
