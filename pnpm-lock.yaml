@@ -8,8 +8,6 @@ importers:
 
   .:
     dependencies:
-<<<<<<< HEAD
-=======
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -22,24 +20,21 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
->>>>>>> 4e7ab909c2283d7235a3a7676540dad04eeb62ab
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
       express:
         specifier: ^5.1.0
         version: 5.2.1
-<<<<<<< HEAD
-      mongoos:
-        specifier: 0.0.1-security
-        version: 0.0.1-security
-=======
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.3
       mongoose:
         specifier: ^9.0.1
         version: 9.0.1
+      mongoose-aggregate-paginate-v2:
+        specifier: ^1.1.4
+        version: 1.1.4
       multer:
         specifier: ^2.0.2
         version: 2.0.2
@@ -47,7 +42,6 @@ importers:
       nodemon:
         specifier: ^3.1.10
         version: 3.1.11
->>>>>>> 4e7ab909c2283d7235a3a7676540dad04eeb62ab
       prettier:
         specifier: ^3.6.2
         version: 3.7.4
@@ -380,10 +374,6 @@ packages:
     resolution: {integrity: sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A==}
     engines: {node: '>=18'}
 
-<<<<<<< HEAD
-  mongoos@0.0.1-security:
-    resolution: {integrity: sha512-bRrqG68DaRaGYsf9wLDqwrzoPfckn9012r6QFTaadOGz/5fmI5lmrnJt4B1NhhGbk8ZXvBEtLNFscM4fo1TAFA==}
-=======
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -425,6 +415,10 @@ packages:
       socks:
         optional: true
 
+  mongoose-aggregate-paginate-v2@1.1.4:
+    resolution: {integrity: sha512-CdQIar3wlS7g0H6JjSJIZzvzz05vFc+Xy9SosJmj46l3xIomgl3ZjDn/n4vDpEei9RBawgUk5zGTIP6fMKdMdA==}
+    engines: {node: '>=4.0.0'}
+
   mongoose@9.0.1:
     resolution: {integrity: sha512-aHPfQx2YX5UwAmMVud7OD4lIz9AEO4jI+oDnRh3lPZq9lrKTiHmOzszVffDMyQHXvrf4NXsJ34kpmAhyYAZGbw==}
     engines: {node: '>=20.19.0'}
@@ -436,7 +430,6 @@ packages:
   mquery@6.0.0:
     resolution: {integrity: sha512-b2KQNsmgtkscfeDgkYMcWGn9vZI9YoXh802VDEwE6qc50zxBFQ0Oo8ROkawbPAsXCY1/Z1yp0MagqsZStPWJjw==}
     engines: {node: '>=20.19.0'}
->>>>>>> 4e7ab909c2283d7235a3a7676540dad04eeb62ab
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -513,7 +506,6 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.14.0:
@@ -1004,9 +996,6 @@ snapshots:
     dependencies:
       mime-db: 1.54.0
 
-<<<<<<< HEAD
-  mongoos@0.0.1-security: {}
-=======
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.12
@@ -1028,6 +1017,8 @@ snapshots:
       bson: 7.0.0
       mongodb-connection-string-url: 7.0.0
 
+  mongoose-aggregate-paginate-v2@1.1.4: {}
+
   mongoose@9.0.1:
     dependencies:
       kareem: 3.0.0
@@ -1048,7 +1039,6 @@ snapshots:
   mpath@0.9.0: {}
 
   mquery@6.0.0: {}
->>>>>>> 4e7ab909c2283d7235a3a7676540dad04eeb62ab
 
   ms@2.1.3: {}
 
