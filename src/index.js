@@ -1,13 +1,13 @@
 import dotenv from "dotenv"
-import connectDB from "./src/db.js"
+import connectDB from "./db/index.js"
 import { app } from "./app.js"
 
 
 dotenv.config({
-    path: "/.sample.env"
-})
+  path: "./env",
+});
 
-const port = process.sample.env.PORT || 8000
+const port = process.env.PORT || 8000
 
 connectDB()
     .then(() => {
