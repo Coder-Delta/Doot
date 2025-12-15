@@ -24,10 +24,13 @@ app.use(cookieParser())
 // ---------------------- Routes Import ----------------------
 
 import userRouter from "./routes/user.route.js"
+import messageRouter from "./routes/message.route.js"
 
 // ---------------------- Routes Declaration ----------------------
 
 app.use("/api/v1/users", userRouter)
+app.use("/api/v1/message", messageRouter);
+
 
 
 // ---------------------- Export ----------------------
