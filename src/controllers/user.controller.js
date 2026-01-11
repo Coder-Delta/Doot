@@ -1,37 +1,47 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
-import jwt from "@elysiajs/jwt";
 import { User } from "../models/user.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary";
-import mongoose from "mongoose";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
-const registerUser = asyncHandler(async (req, res) => {
-  const { username, fullName, email, password } = req.body;
+const registerUser = asyncHandler(async (c) => {
+  const body = await c.req.parseBody();
+  const { username, fullName, email, password } = body;
 
-  if (!username || email || password) {
-    throw new ApiError(404, "All fields are required!");
+  if (!username || !email || !password || !fullName) {
+    throw new ApiError(400, "All fields are required!");
   }
 
   const existedUser = await User.findOne({
     $or: [{ username }, { email }],
   });
 
-  if (!existedUser) {
-    throw new ApiError(404, "User already exist!");
+  if (existedUser) {
+    throw new ApiError(409, "User already exists!");
   }
 
-  const avatarLocalPath = req.files?.avatar?.[0]?.path;
+  const avatarFile = body.avatar;
 
-  const avatar = await uploadOnCloudinary(avatarLocalPath);
+  if (!avatarFile) {
+    throw new ApiError(400, "Avatar is required");
+  }
 
-  const user = await User.create(username, email, password, fullName, avatar);
-  return res
-  .status(200)
-  .json(
-    new ApiResponse (201, user, "User created successfully!")
-  )
+  const buffer = Buffer.from(await avatarFile.arrayBuffer());
+
+  const avatar = await uploadOnCloudinary(buffer);
+
+  const user = await User.create({
+    username,
+    fullName,
+    email,
+    password,
+    avatar: avatar?.url || "",
+  });
+
+  return c.json(
+    new ApiResponse(201, user, "User created successfully!"),
+    201
+  );
 });
 
-
-export default registerUser
+export default registerUser;

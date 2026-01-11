@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { getCookie } from "hono/cookie";
 
 const app = new Hono();
 
@@ -34,9 +35,14 @@ app.use("*", async (c, next) => {
   await next();
 });
 
+app.use("/public/*", serveStatic({ root: "./" }));
+
+//cokkie read ke liya
+getCookie(c, "token");
+
 // Declaration the user routes
 
-import registerUser from "../controllers/user.controller";
+import userRouter from "./routes/user.routes.js"
 
 app.use("/api/v1/users", userRouter)
 

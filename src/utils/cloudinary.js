@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary"; //in here "as" coustomize the v2 to cloudnary
+import { cloudinary } from "@cloudinary/asset-management" //in here "as" coustomize the v2 to cloudnary
 import fs from "fs";
 
 
