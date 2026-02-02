@@ -22,4 +22,7 @@ const getIO = () => {
   return io;
 };
 
-export { initSocket, getIO };
+export {
+  initSocket,
+  getIO
+};
