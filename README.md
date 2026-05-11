@@ -137,6 +137,7 @@ Response:
 ```
 
 #### Get All Messages
+
 ```
 GET /messages
 
