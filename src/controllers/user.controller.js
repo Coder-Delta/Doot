@@ -1,8 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/apiError.js";
+import { apiError } from "../utils/apiError.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
+import { apiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
 
 const generateAccessAndRefereshTokens = async (userId) => {
@@ -16,7 +16,7 @@ const generateAccessAndRefereshTokens = async (userId) => {
 
     return { accessToken, refreshToken};
   } catch (error) {
-    throw new ApiError(
+    throw new apiError(
       500,
       "Something went wrong while generating referesh and access token"
     );
@@ -29,14 +29,14 @@ const registerUser = asyncHandler(async (req, res) => {
   if (
     [fullName, email, username, password].some((field) => field?.trim() === "")
   ) {
-    throw new ApiError(400, "All fileds are required.");
+    throw new apiError(400, "All fileds are required.");
   }
 
   const existedUser = await User.findOne({
     $or: [{ username }, { email }],
   });
   if (existedUser) {
-    throw new ApiError(
+    throw new apiError(
       409,
       "An User Allready Exist With The Same Username Or Email"
     );
@@ -45,12 +45,12 @@ const registerUser = asyncHandler(async (req, res) => {
   const avatarLocalPath = req.files?.avatar?.[0]?.path;
 
   if (!avatarLocalPath) {
-    throw new ApiError(400, "Avatar file is required");
+    throw new apiError(400, "Avatar file is required");
   }
   const avatar = await uploadOnCloudinary(avatarLocalPath);
 
   if (!avatar) {
-    throw new ApiError(400, "Avatar uploading was unsuccesfull");
+    throw new apiError(400, "Avatar uploading was unsuccesfull");
   }
 
   const user = await User.create({
@@ -66,19 +66,19 @@ const registerUser = asyncHandler(async (req, res) => {
   );
 
   if (!createdUser) {
-    throw new ApiError(500, "Something went wrong while registering the user");
+    throw new apiError(500, "Something went wrong while registering the user");
   }
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createdUser, "User Registered successfully"));
+    .json(new apiResponse(200, createdUser, "User Registered successfully"));
 });
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
 
   if (!username && !email) {
-    throw new ApiError(400, " Username or Email Is Required ");
+    throw new apiError(400, " Username or Email Is Required ");
   }
 
   const user = await User.findOne({
@@ -86,13 +86,13 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    throw new ApiError(404, "User doesn't exist");
+    throw new apiError(404, "User doesn't exist");
   }
 
   const isPasswordCorrect = await user.isPasswordCorrect(password);
 
   if (!isPasswordCorrect) {
-    throw new ApiError(401, "Invalid User Credentials");
+    throw new apiError(401, "Invalid User Credentials");
   }
 
   const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
@@ -112,7 +112,7 @@ const loginUser = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, options)
     .cookie("refereshToken", refreshToken, options)
     .json(
-      new ApiResponse(
+      new apiResponse(
         200,
         {
           loggedInUser,
@@ -154,7 +154,7 @@ const refereshAccessToken = asyncHandler(async (req, res) => {
     req.cookies.refereshToken || req.body.refereshToken;
 
   if (!incomingRefreshToken) {
-    throw new ApiError(401, "Unauthorized request");
+    throw new apiError(401, "Unauthorized request");
   }
 
   try {
@@ -166,10 +166,10 @@ const refereshAccessToken = asyncHandler(async (req, res) => {
     const user = await User.findById(decodedToken?._id);
 
     if (!user) {
-      throw new ApiError(401, "Invalid Refresh Token");
+      throw new apiError(401, "Invalid Refresh Token");
     }
     if (user.refreshToken !== incomingRefreshToken) {
-      throw new ApiError(401, "Refreshed token is expired or used");
+      throw new apiError(401, "Refreshed token is expired or used");
     }
 
     const options = {
@@ -194,7 +194,7 @@ const refereshAccessToken = asyncHandler(async (req, res) => {
         )
       );
   } catch (error) {
-    throw new ApiError(401, error?.message || "Invalid Refresh Token");
+    throw new apiError(401, error?.message || "Invalid Refresh Token");
   }
 });
 
@@ -205,7 +205,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
 
   if (!isPasswordCorrect) {
-    throw new ApiError(404, "Invalid old password");
+    throw new apiError(404, "Invalid old password");
   }
 
   user.password = newPassword;
@@ -213,18 +213,18 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, {}, "Password changed successfully"));
+    .json(new apiResponse(200, {}, "Password changed successfully"));
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  return res.status(200).json(new ApiResponse(200, req.user, "User injected successfully"));
+  return res.status(200).json(new apiResponse(200, req.user, "User injected successfully"));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { fullName, email } = req.body;
 
   if (!fullName || !email) {
-    throw new ApiError(new ApiResponse(404, {}, "All field are requird"));
+    throw new apiError(new apiResponse(404, {}, "All field are requird"));
   }
 
   const user = await User.findByIdAndUpdate(
@@ -240,7 +240,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Account Details Update Successfully"));
+    .json(new apiResponse(200, user, "Account Details Update Successfully"));
 });
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
@@ -268,7 +268,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "File update successfully"));
+    .json(new apiResponse(200, user, "File update successfully"));
 });
 
 export {
