@@ -38,6 +38,9 @@ importers:
       multer:
         specifier: ^2.0.2
         version: 2.0.2
+      pnpm:
+        specifier: ^11.0.9
+        version: 11.0.9
       socket.io:
         specifier: ^4.8.1
         version: 4.8.1
@@ -525,6 +528,11 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  pnpm@11.0.9:
+    resolution: {integrity: sha512-NM6C5ngCM8+crYaFApqPgdLgYZbFqbrZiHn3QklAxoF8TkUk+304uFU87tSLl1i4668avTYAwjLEyM9zZghvOA==}
+    engines: {node: '>=22.13'}
+    hasBin: true
 
   prettier@3.7.4:
     resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
@@ -1198,6 +1206,8 @@ snapshots:
   path-to-regexp@8.3.0: {}
 
   picomatch@2.3.1: {}
+
+  pnpm@11.0.9: {}
 
   prettier@3.7.4: {}
 
